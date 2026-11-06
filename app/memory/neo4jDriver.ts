@@ -12,7 +12,7 @@ export const driver = neo4j.driver(
 export async function connectToGraphDB() {
   try {
     const serverInfo = await driver.verifyConnectivity();
-    console.log('Srver is connected successfully');
+    console.log('Server is connected successfully');
     return { success: true, serverInfo };
   } catch (error) {
     console.error(`Failed to connect to the server.\n error:${error}`);

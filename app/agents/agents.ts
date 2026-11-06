@@ -2,17 +2,13 @@
 import { HARNESS_PROMPT } from "./config.js";
 import Openai from 'openai'
 import 'dotenv/config'
+import type { ITool } from "./tools.js";
+
+export type { ITool } from "./tools.js";
 
 export interface IMessage {
   role: 'user' | 'assistant' | 'developer';
   content: string
-}
-
-export interface ITool {
-  name: string
-  description: string
-  doc?: string
-  executor: (input: string) => Promise<string>
 }
 
 export type Interceptor = (message: IMessage) => void

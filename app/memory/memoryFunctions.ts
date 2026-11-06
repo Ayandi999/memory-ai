@@ -92,6 +92,29 @@ export class GraphMemory {
     return await this.executeCypher(query, { name: name.toLowerCase().trim() });
   }
 
+  //Remove a node ad all relations assossiated with it detach delete
+  public async deleteNode(name: string) {
+    const query = `
+      MATCH (p:Person {name:$name})
+      DETACH DELETE p 
+      RETURN count(p) AS deletedCount
+    `
+    return await this.executeCypher(query, { name: name.toLowerCase().trim() });
+  }
+  //remove a relation specifically
+  public async deleteRelation(fromName: string, toName: string, relationshipType?: string) {
+    const query = `
+    MATCH (a:Person {name: $fromName})-[r]->(b:Person {name: $toName})
+    WHERE $relationshipType IS NULL OR type(r) = $relationshipType
+    DELETE r
+    RETURN count(r) AS deletedCount
+  `;
+    return await this.executeCypher(query, {
+      fromName: fromName.toLowerCase().trim(),
+      toName: toName.toLowerCase().trim(),
+      relationshipType: relationshipType ? relationshipType.toUpperCase() : null
+    });
+  }
   // Helper to safely parse tool inputs that LLMs might pass as JSON strings or raw strings
   private parseToolInput(input: string): Record<string, any> {
     try {
@@ -168,6 +191,42 @@ export class GraphMemory {
             if (!name) return JSON.stringify({ error: 'Missing required field: "name"' });
             const result = await this.fetchInformation(name);
             return JSON.stringify({ person: name, connections: result });
+          } catch (err: any) {
+            return JSON.stringify({ error: err?.message || String(err) });
+          }
+        }
+      },
+      {
+        name: 'deleteRelation',
+        description: 'Deletes a relationship between two persons in the knowledge graph (optionally filtered by relationshipType).',
+        doc: 'deleteRelation({"fromName": "string", "toName": "string", "relationshipType": "string"})',
+        executor: async (input: string) => {
+          try {
+            const data = this.parseToolInput(input);
+            const { fromName, toName, relationshipType } = data;
+            if (!fromName || !toName) {
+              return JSON.stringify({
+                error: 'Missing required fields: "fromName" and "toName"'
+              });
+            }
+            const result = await this.deleteRelation(fromName, toName, relationshipType);
+            return JSON.stringify({ success: true, result });
+          } catch (err: any) {
+            return JSON.stringify({ error: err?.message || String(err) });
+          }
+        }
+      },
+      {
+        name: 'deleteNode',
+        description: 'Permanently deletes a person node and detaches all connected relationships from the knowledge graph.',
+        doc: 'deleteNode({"name": "string"})',
+        executor: async (input: string) => {
+          try {
+            const data = this.parseToolInput(input);
+            const name = data.name || data.query;
+            if (!name) return JSON.stringify({ error: 'Missing required field: "name"' });
+            const result = await this.deleteNode(name);
+            return JSON.stringify({ success: true, result });
           } catch (err: any) {
             return JSON.stringify({ error: err?.message || String(err) });
           }
