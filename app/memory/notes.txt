@@ -1,0 +1,17 @@
+What do i want to do here?
+
+make a function that recives a query.
+
+We then try to analyse this query using a LLM model
+In the system prompt for this we try to make the model extract relations 
+
+we are gonna make 4 funcitons 
+
+findAPersonsId.
+createAPerson.
+makeARelation.
+fetchInformation.
+requestUserConformation.
+
+we want to do a fuzzy searc to find simmilar persons and then we can do 
+

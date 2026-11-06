@@ -42,7 +42,7 @@ export class AgentBuilder {
   }
 }
 
-function getNeededEnvVariables(Key: string): string {
+export function getNeededEnvVariables(Key: string): string {
   const value = process.env?.[Key]?.trim();
   if (!value) {
     throw new Error(`[Configuration error] Missing value for : ${Key}`);

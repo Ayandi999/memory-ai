@@ -4,6 +4,7 @@ import type { ITool } from './agents/agents.js'
 import axios from 'axios'
 
 import { exec } from 'child_process';
+import { connectToGraphDB } from './memory/neo4jDriver.js';
 
 const weatherTool: ITool = {
   name: 'fetchWeatherInfo',
@@ -31,9 +32,13 @@ const cliAccessTool: ITool = {
 }
 
 async function init() {
+  //Initialising memory:
+  const { serverInfo } = await connectToGraphDB();
+
   //Here Agnet.builder() returns a agent builder class object
   //then we just do chaining on the agent builder class object.
-  //and on calling the build it returns the Agent class object 
+  //and on calling the build it returns the Agent class object.
+
   const agent: Agent = Agent.builder()
     .setIntructions(`You are an expert coding agent`)
     .tool(cliAccessTool)
