@@ -1,7 +1,7 @@
 
 import { Agent } from './agents/agents.js';
 import { cliAccessTool } from './agents/tools.js';
-import { connectToGraphDB } from './memory/neo4jDriver.js';
+import { connectToGraphDB } from './memory/graphMemory/neo4jDriver.js';
 
 async function init() {
   // Initialising memory:

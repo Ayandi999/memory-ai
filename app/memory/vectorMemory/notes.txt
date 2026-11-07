@@ -1,0 +1,3 @@
+Vector Memory Module
+- Vector database integration / semantic search memory
+- Storing text embeddings for similarity retrieval

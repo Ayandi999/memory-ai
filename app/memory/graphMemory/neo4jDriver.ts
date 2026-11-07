@@ -1,5 +1,5 @@
 import neo4j from 'neo4j-driver';
-import { getNeededEnvVariables } from '../agents/agents';
+import { getNeededEnvVariables } from '../../agents/agents';
 
 export const driver = neo4j.driver(
   getNeededEnvVariables('NEO4J_URI'),

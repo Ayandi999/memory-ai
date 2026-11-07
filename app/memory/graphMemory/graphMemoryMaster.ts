@@ -1,6 +1,6 @@
 import type { Driver } from 'neo4j-driver';
 import { driver as defaultDriver } from './neo4jDriver';
-import { Agent, type ITool } from '../agents/agents';
+import { Agent, type ITool } from '../../agents/agents';
 import { GraphMemory } from './memoryFunctions';
 
 // This is the agent that is gonna deal with graph memory.

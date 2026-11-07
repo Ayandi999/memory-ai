@@ -1,5 +1,5 @@
 import type { Driver } from 'neo4j-driver';
-import type { ITool } from '../agents/agents.ts';
+import type { ITool } from '../../agents/agents.ts';
 
 export interface PersonProperties {
   name: string;
