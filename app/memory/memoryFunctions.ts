@@ -115,6 +115,7 @@ export class GraphMemory {
       relationshipType: relationshipType ? relationshipType.toUpperCase() : null
     });
   }
+
   // Helper to safely parse tool inputs that LLMs might pass as JSON strings or raw strings
   private parseToolInput(input: string): Record<string, any> {
     try {

@@ -18,7 +18,5 @@ we want to do a fuzzy searc to find simmilar persons and then we can do
 ---
 
 Need to make More tools how to ask for users requestUserConformation
-Write the system prompt propperly.
-make sure the pipeline is mentioned propperly.
 see how main agent knows about if a relation was extracted or stored propperly or not.
 
