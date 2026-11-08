@@ -1,3 +1,23 @@
 Vector Memory Module
+====================
 - Vector database integration / semantic search memory
-- Storing text embeddings for similarity retrieval
+- Storing text embeddings for similarity retrieval (Pinecone)
+- Audio/Video ingestion & timestamp citation retrieval (transcriptVectorService)
+
+TODO / FUTURE IMPROVEMENTS:
+---------------------------
+Image-Based / Scanned PDF Extraction:
+- Current State:
+  * Uses LangChain PDFLoader (`pdf-parse`) for text extraction.
+  * Detection works: flags PDF as 'image-based' if average characters per page < 40.
+  * Scanned PDFs currently return minimal text + a warning that OCR is required; they are not yet OCR-processed.
+
+- Recommended Implementations:
+  1. Multimodal Vision OCR (Recommended):
+     - Render PDF pages to images (PNG/JPEG) via `pdf-poppler` or `pdf2pic` / `canvas`.
+     - Pass page images to existing LLM Vision (`gpt-4o` / `gpt-4o-mini`) with transcription prompt.
+     - Preserves tables, headers, and handles multilingual / Indian language text accurately.
+  2. Local OCR:
+     - Use `tesseract.js` for free, offline optical character recognition.
+  3. Cloud Document AI:
+     - Use dedicated OCR service (Google Cloud Document AI, AWS Textract, or Sarvam Document OCR).
